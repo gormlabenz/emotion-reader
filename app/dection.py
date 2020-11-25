@@ -4,6 +4,7 @@ import cv2
 from keras.models import load_model
 import numpy as np
 
+
 # parameters for loading data and images
 detection_model_path = "haarcascade_files/haarcascade_frontalface_default.xml"
 emotion_model_path = "models/_mini_XCEPTION.102-0.66.hdf5"
@@ -15,12 +16,11 @@ emotion_classifier = load_model(emotion_model_path, compile=False)
 EMOTIONS = ["angry", "disgust", "scared", "happy", "sad", "surprised", "neutral"]
 
 
-""" feelings_faces = []
-for index, emotion in enumerate(EMOTIONS):
-    feelings_faces.append(cv2.imread('emojis/' + emotion + '.png', -1)) """
+def test_message(sio):
+    sio.emit("serverToClient", "hello from cv2")
 
 
-def read_emotions():
+def read_emotions(sio):
     # starting video streaming
     cv2.namedWindow("your_face")
     camera = cv2.VideoCapture(0)
@@ -92,6 +92,7 @@ def read_emotions():
             cv2.rectangle(frameClone, (fX, fY), (fX + fW, fY + fH), (0, 0, 255), 2)
 
         print(emotions)
+        sio.emit("serverToClient", emotions)
 
         cv2.imshow("your_face", frameClone)
         cv2.imshow("Probabilities", canvas)
@@ -100,3 +101,7 @@ def read_emotions():
 
     camera.release()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    read_emotions()
