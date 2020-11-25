@@ -1,0 +1,74 @@
+{
+  "name": "chat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "serve-all": "concurrently --kill-others  \"./venv/bin/python app/app.py\" \"vue-cli-service serve\"",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "lite-server --baseDir='dist'"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "lite-server": "^2.5.4",
+    "register-service-worker": "^1.7.1",
+    "vue": "^2.6.11",
+    "vue-socket.io": "^3.0.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-pwa": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "prerender-spa-plugin": "^3.2.1",
+    "prettier": "^1.19.1",
+    "tailwindcss": "^1.8.10",
+    "vue-cli-plugin-prerender-spa": "~1.1.6",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/prettier"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "description": "A chat template build with vue socketio and python",
+  "main": "src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gormlabenz/chat-ui.git"
+  },
+  "keywords": [
+    "chat",
+    "ui",
+    "vue",
+    "web"
+  ],
+  "author": "Gorm Labenz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gormlabenz/chat-ui/issues"
+  },
+  "homepage": "https://github.com/gormlabenz/chat-ui#readme"
+}
