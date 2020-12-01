@@ -3,6 +3,7 @@ import imutils
 import cv2
 from keras.models import load_model
 import numpy as np
+import socketio
 
 
 # parameters for loading data and images
@@ -16,8 +17,11 @@ emotion_classifier = load_model(emotion_model_path, compile=False)
 EMOTIONS = ["angry", "disgust", "scared", "happy", "sad", "surprised", "neutral"]
 
 
-def test_message(sio):
-    sio.emit("serverToClient", "hello from cv2")
+def connect_to_server():
+    sio = socketio.Client()
+    sio.connect("http://0.0.0.0:5000")
+
+    read_emotions(sio)
 
 
 def read_emotions(sio):
@@ -60,7 +64,7 @@ def read_emotions(sio):
 
         emotions = {}
         for (i, (emotion, prob)) in enumerate(zip(EMOTIONS, preds)):
-            emotions[emotion] = prob
+            emotions[emotion] = float(prob)
             # construct the label text
             text = "{}: {:.2f}%".format(emotion, prob * 100)
 
@@ -91,8 +95,8 @@ def read_emotions(sio):
             )
             cv2.rectangle(frameClone, (fX, fY), (fX + fW, fY + fH), (0, 0, 255), 2)
 
-        print(emotions)
-        sio.emit("serverToClient", emotions)
+        # print(emotions)
+        sio.emit("clientToServer", emotions)
 
         cv2.imshow("your_face", frameClone)
         cv2.imshow("Probabilities", canvas)
